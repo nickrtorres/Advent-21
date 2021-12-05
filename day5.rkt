@@ -23,10 +23,7 @@ ex
   (inclusive-range b e step))
 
 (define (make-line-segment in)
-  (define points (string-split in " -> "))
-  (define xy1 (string-split (first points) ","))
-  (define xy2 (string-split (second points) ","))
-  (map string->number (list (first xy1) (second xy1) (first xy2) (second xy2))))
+  (map string->number (regexp-match* #rx"[0-9]+" in)))
 
 (check-equal? '(0 9 5 9) (make-line-segment "0,9 -> 5,9"))
 
