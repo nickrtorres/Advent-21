@@ -74,13 +74,16 @@ ex
 
 (define (solve in part)
   (define (make-plot segments part)
-    (define (part-one-candidate? line)
-      (or (vertical-line-segment? line) (horizontal-line-segment? line)))
-    (define (part-two-candidate? line)
-      (or (vertical-line-segment? line) (horizontal-line-segment? line) (diagonal-line-segment? line)))
-    (define candidate?
-      (cond [(equal? part 'part-one) part-one-candidate?]
-            [(equal? part 'part-two) part-two-candidate?]
+    (define (candidate? line)
+      (define (part-one-candidate? line)
+        (or (vertical-line-segment? line)
+            (horizontal-line-segment? line)))
+      (define (part-two-candidate? line)
+        (or (vertical-line-segment? line)
+            (horizontal-line-segment? line)
+            (diagonal-line-segment? line)))
+      (cond [(equal? part 'part-one) (part-one-candidate? line)]
+            [(equal? part 'part-two) (part-two-candidate? line)]
             [else (error "invalid part")]))
     (define candidates (filter candidate? segments))
     (foldl (lambda (segment table)
